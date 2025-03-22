@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Raspberry Pi Camera - OV5647</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        img {
+            max-width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .camera-info {
+            background-color: #e8f4f8;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0 20px 0;
+            text-align: left;
+        }
+
+        .resolution-buttons {
+            margin: 15px 0;
+        }
+
+        .resolution-button {
+            padding: 8px 15px;
+            margin: 0 5px;
+            border: none;
+            border-radius: 4px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+
+        .resolution-button:hover {
+            background-color: #45a049;
+        }
+
+        .refresh-button {
+            padding: 10px 20px;
+            margin: 15px 0;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .refresh-button:hover {
+            background-color: #0b7dda;
+        }
+    </style>
+    <script>
+        function changeResolution(res) {
+            window.location.href = '/change_resolution/' + res;
+        }
+
+        function refreshImage() {
+            document.getElementById('camera-image').src = '/static/latest_image.jpg?' + new Date().getTime();
+        }
+
+        // Auto refresh image
+        setInterval(refreshImage, 200); // Refresh image every 200ms
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Raspberry Pi Camera Image</h1>
+        <div class="camera-info">
+            <p><strong>Camera Model:</strong> OV5647 (Raspberry Pi Camera Module v1)</p>
+            <p><strong>Maximum Resolution:</strong> 2592 x 1944</p>
+            <p><strong>Total Pixels:</strong> 5.04 megapixels</p>
+        </div>
+        <div class="resolution-buttons">
+            <button class="resolution-button" onclick="changeResolution('low')">Low Resolution (640x480)</button>
+            <button class="resolution-button" onclick="changeResolution('medium')">Medium Resolution (1280x720)</button>
+            <button class="resolution-button" onclick="changeResolution('high')">High Resolution (1920x1080)</button>
+            <button class="resolution-button" onclick="changeResolution('max')">Maximum Resolution (2592x1944)</button>
+        </div>
+        <button class="refresh-button" onclick="refreshImage()">Manually Refresh Image</button>
+        <div>
+            <img id="camera-image" src="/static/latest_image.jpg?{{ timestamp }}" alt="Camera Image" />
+        </div>
+    </div>
+</body>
+
+</html>
