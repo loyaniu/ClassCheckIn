@@ -1,0 +1,6 @@
+python-dotenv
+convex
+requests
+deepface
+paho-mqtt
+tf-keras
